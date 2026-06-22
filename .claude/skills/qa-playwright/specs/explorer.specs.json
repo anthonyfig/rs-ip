@@ -1,0 +1,9 @@
+{
+  "capability": "Ground Truth Explorer (example specs)",
+  "scenarios": [
+    { "id": "EXP-S1", "name": "overview loads", "path": "/", "steps": [],
+      "expect": [ { "type": "visible", "selector": "#view-overview" } ] },
+    { "id": "EXP-S2", "name": "open a capability", "path": "/#gt-03-capability-home-positioning", "steps": [],
+      "expect": [ { "type": "visible", "selector": ".art.active .meta" } ] }
+  ]
+}

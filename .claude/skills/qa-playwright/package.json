@@ -1,0 +1,10 @@
+{
+  "name": "qa-playwright",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "playwright test",
+    "install:browser": "playwright install chromium"
+  },
+  "devDependencies": { "@playwright/test": "^1.47.0" }
+}
