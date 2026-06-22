@@ -1,0 +1,14 @@
+# dependencies / builds
+node_modules/
+dist/
+build/
+.astro/
+.vercel/
+
+# env & secrets (never commit Supabase / Anthropic keys)
+.env
+.env.*
+
+# os / editor
+.DS_Store
+*.log
