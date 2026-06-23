@@ -10,9 +10,18 @@ description: >
 Ground Truth is the source of truth; software is derived from it. Treat it as code: structured,
 owned, versioned, validated.
 
+## The kit (scaffold a new project)
+This repo ships the reusable Ground Truth kit. To stand it up in a new project, copy:
+- `templates/ground-truth/` → the project's `ground-truth/_schema/` — the metadata schema plus the
+  `capability-spec` and `user-story` templates. Replace every `<placeholder>` with project specifics.
+- `tools/ground-truth/` → the project's `tools/ground-truth/` — the zero-dependency engine
+  (`lib.mjs`) and the consistency checker (`check.mjs`). Wire `check.mjs` into CI; it fails (exit 1)
+  if any artifact is missing required metadata or has an invalid status.
+
 ## The metadata contract
 Every artifact begins with the YAML block (`id, title, part, type, owner, status, confidence,
-sources, updated, last_validated, applies_to, related`). No metadata → not Ground Truth.
+sources, updated, last_validated, applies_to, related`). No metadata → not Ground Truth. See
+`templates/ground-truth/metadata-schema.md` for the full field set and rules.
 
 ## Reading
 - Load only artifacts whose `applies_to` matches your task.
@@ -21,7 +30,7 @@ sources, updated, last_validated, applies_to, related`). No metadata → not Gro
 - Follow `sources` to verify; follow `related` for context.
 
 ## Writing / changing
-1. New artifact → copy the right template; fill metadata honestly.
+1. New artifact → copy the right template from `templates/ground-truth/`; fill metadata honestly.
 2. Changing a source behind an `approved` artifact → set it `needs-revalidation`.
 3. Never invent facts to fill a gap — record an **open question** instead.
 4. Material decision → add a numbered ADR to the decision log.
