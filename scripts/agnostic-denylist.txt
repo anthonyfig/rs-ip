@@ -1,0 +1,8 @@
+# Terms that must never appear in rs-ip (client / engagement / content specifics).
+# One per line; case-insensitive. Add client and product names as engagements grow.
+# (Structural leaks — gt-NN ids, BR-N, OQ-N, rs-site* repos, Decision NNNN — are caught by patterns.)
+anthropic partner
+masterclass
+the farmer's dog
+$28.8M
+rootstrap.com

@@ -1,0 +1,9 @@
+{
+  "capability": "<capability-name> (example specs — replace per project)",
+  "scenarios": [
+    { "id": "EX-S1", "name": "page loads", "path": "/", "steps": [],
+      "expect": [ { "type": "visible", "selector": "main" } ] },
+    { "id": "EX-S2", "name": "primary CTA visible", "path": "/", "steps": [],
+      "expect": [ { "type": "visible", "selector": "[data-cta=primary]" } ] }
+  ]
+}
