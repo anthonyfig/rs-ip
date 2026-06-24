@@ -29,6 +29,9 @@ all while staying inside the repo's own rules (`CLAUDE.md`, Ground Truth, brand/
 
 For each open issue, classify before acting:
 
+- **Already assigned to someone else** — the issue has an assignee who is not you. → **Don't take it**,
+  unless the user explicitly told you to work that specific issue. Don't comment, don't claim it; just skip
+  it and move to the next. (An issue assigned to *you* from a prior tick is yours to continue.)
 - **Decision / Ground-Truth gate** — needs a product, IA, or business-reality call, or the spec and code
   disagree and it's unclear which is right. → **Do not implement.** Post one *"Decision needed"* comment:
   the options, who's affected, your recommendation, and your confidence. Move on.
@@ -42,18 +45,22 @@ comment you (or a prior tick) already left. At most one comment per issue per si
 
 ## Fixing an actionable issue, end-to-end
 
-1. **Branch:** `git checkout -b <type>/<slug>` off an up-to-date base (`feat|fix|chore|docs`).
-2. **Trace to truth:** find/extend the Ground Truth artifact the fix satisfies; if unspecced, add the spec
+1. **Claim it:** assign the issue to yourself **before** you start — `gh issue edit <n> --add-assignee @me`.
+   This signals to the fleet/teammates that it's taken. If the assign fails (e.g. you're not a repo
+   collaborator), fall back to one *"Picking this up"* comment, idempotently. Never start unclaimed work that
+   then collides with someone else.
+3. **Branch:** `git checkout -b <type>/<slug>` off an up-to-date base (`feat|fix|chore|docs`).
+4. **Trace to truth:** find/extend the Ground Truth artifact the fix satisfies; if unspecced, add the spec
    in the same PR. Build only from `approved` artifacts; flag any draft dependency.
-3. **Surgical fix:** smallest change that satisfies the issue; match surrounding conventions and the
+5. **Surgical fix:** smallest change that satisfies the issue; match surrounding conventions and the
    brand/spec locks. Verify the result yourself enough to be confident (build/render/screenshot), but
    that is *not* the sign-off.
-4. **Independent review (mandatory):** spawn a *separate* reviewer (a fresh agent / the repo's QA agent)
+6. **Independent review (mandatory):** spawn a *separate* reviewer (a fresh agent / the repo's QA agent)
    and have it try to **reject** the PR — hunt for regressions, spec drift, placeholder content, brand
    violations, missing acceptance criteria, a11y/perf. Treat its BLOCKERS as must-fix; re-verify after fixing.
-5. **PR:** open with the repo's canonical PR template (Summary · Spec trace · Ground-Truth impact ·
+7. **PR:** open with the repo's canonical PR template (Summary · Spec trace · Ground-Truth impact ·
    How verified · Checklist). Put **`Closes #<n>`** in the body so merge auto-closes the issue.
-6. **Merge:** when CLEAN/mergeable, the checklist passes, and every review thread is resolved —
+8. **Merge:** when CLEAN/mergeable, the checklist passes, and every review thread is resolved —
    **squash-merge and delete the branch**. Then confirm the linked issue actually closed (below).
 
 ## Git discipline (do this every time)
