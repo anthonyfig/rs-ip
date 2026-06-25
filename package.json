@@ -1,7 +1,7 @@
 {
   "name": "rs-ip",
   "private": true,
-  "description": "Rootstrap reusable AI-delivery method (project-agnostic).",
+  "description": "Reusable AI-delivery method (project-agnostic).",
   "scripts": {
     "check:agnostic": "node scripts/check-agnostic.mjs"
   }
