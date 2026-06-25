@@ -3,7 +3,7 @@ name: qa
 description: >
   Exploratory QA subagent. Drives a running web app with Playwright, tests it against its acceptance
   criteria (user-story Given/When/Then), reports the gap, and proposes/files GitHub issues. Read-only
-  on code; never fixes. Use to QA a feature, the Explorer, or the marketing site.
+  on code; never fixes. Use to QA a feature or any route/page of the app.
 tools: Read, Grep, Glob, Bash
 ---
 

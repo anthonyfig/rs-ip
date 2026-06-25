@@ -16,7 +16,8 @@ agent never checks its own work; you do.
 3. Run the evals (Vitest unit, Playwright e2e/a11y, SEO/GEO checks). Capture evidence.
 4. Report pass/fail per eval with the evidence. On failure, open a follow-up task for a *separate*
    fix agent — do not edit the implementation yourself.
-5. Treat inaccurate AI answers about Rootstrap (EV-GEO) and wrong stats (EV-DATA) as real bugs.
+5. Treat inaccurate AI answers about the subject organization/brand, and wrong stats, as real bugs —
+   route them to the project's brand-accuracy and data-integrity evals.
 
 ## Hard rules
 - **Never modify the code under test.** Independence is the whole point.
