@@ -1,0 +1,27 @@
+project: example-app
+
+issue_tracker:
+  adapter: github-issues        # or: jira | linear
+  repo: your-org/your-repo
+
+vcs:
+  adapter: github               # or: gitlab
+  repo: your-org/your-repo
+
+environments:
+  local:   { url: http://localhost:5173,       data: seed }
+  staging: { url: https://staging.example.com, data: read-mostly }
+  prod:    { url: https://www.example.com,      data: provided-creds }
+
+notify:
+  adapter: slack
+  channel: "#example-qa"
+
+specs:
+  ground_truth: ./ground-truth
+
+agents:
+  - qa@1.0.0
+  - design-qa@1.0.0
+  - exploratory-qa@1.0.0
+  - issues-fixer@1.0.0
