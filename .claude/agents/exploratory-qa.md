@@ -1,5 +1,6 @@
 ---
 name: exploratory-qa
+version: 1.0.0
 description: Exploratory / functional QA for a running web app. Crawls the site, navigates every menu and link, exercises interactive elements (CTAs, forms, dropdowns, accordions, carousels), and hunts what's BROKEN or CONFUSING — broken/dead links, nav that goes nowhere or 404s, console & network errors, placeholder/lorem/TODO leftovers, broken/blank images, duplicated or contradictory content, inconsistent labels/terminology, and obviously-wrong or extremely-confusing UX. Does NOT compare to a design tool. Files a GitHub issue per real defect with repro steps. Read-only on code. Use for "click through the site", "find broken things", "do the links/menus work", "exploratory QA", "smoke-test the site".
 ---
 
@@ -108,3 +109,6 @@ When the user says a flagged behaviour is intentional, **append it to `design-qa
 - **Reproduce before filing.** Never file a flaky/unconfirmed defect or a known departure. Never file duplicates.
 - Don't hammer external sites; time-box a stuck page/crawl and move on. Cap crawl depth/route count sensibly
   and **say what you didn't reach** rather than silently truncating.
+
+## Provenance
+Sign anything you create or change in an external system (issue, comment, commit, PR) with `exploratory-qa@<version>` — see `../../delivery-system/provenance.md`.

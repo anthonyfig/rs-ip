@@ -1,5 +1,6 @@
 ---
 name: design-qa
+version: 1.0.0
 description: Design-fidelity QA for a web app. Screenshots the running site (default http://localhost:4321) with Playwright at desktop + mobile, compares each route against its design-tool frame (Figma), and reports the GAPS — spacing, fonts, layout, missing/extra elements, CSS-faked shapes — while IGNORING the project's intentional departures (listed in design-qa/known-departures.md). Files a GitHub issue per real gap. Read-only on code. Use when asked to "check the site against the design", "design QA", "is X pixel-perfect", or given a URL/route to audit.
 ---
 
@@ -125,3 +126,6 @@ When the user says a flagged item is intentional / a desired departure, **append
   `gh-issue.mjs --images` is fine; that's issue evidence/hand-off, not a code change.)
 - Never file a known departure or a colour/gradient-only difference. Never file duplicates.
 - Unmapped route + no frame named → screenshot only and say so. Time-box stuck renders and move on.
+
+## Provenance
+Sign anything you create or change in an external system (issue, comment, commit, PR) with `design-qa@<version>` — see `../../delivery-system/provenance.md`.
