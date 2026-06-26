@@ -36,6 +36,9 @@ Defaults live in `design-qa/config.json` (`baseUrl`, `viewports`, `routes[]` →
 2. Playwright: if `scripts/shot.mjs` reports it missing, run `npm i -D playwright && npx playwright install chromium`.
 3. Issues need a token in `.env` (`GITHUB_TOKEN`) and a target repo (`config.repo` / `GH_REPO`). If it's
    absent, do the full review but output the issues as a list and say the token is missing.
+4. **Pin to the exact code under review.** When verifying a specific branch/PR, build and serve **that
+   commit** and record its `git rev-parse HEAD` in the report. Never measure a stale build artifact left
+   over from another branch — a build-freshness mismatch is how a real gap reads as "PASS" (or vice versa).
 
 ## Process (per route × viewport — desktop and mobile)
 1. Screenshot the site: `scripts/shot.mjs <route-or-url>` → `design-qa/shots/`.
@@ -65,6 +68,16 @@ or blank decorative vectors; broken/stretched/missing images.
 Use common sense and **prioritize what a visitor notices**. Label each `priority:high` (broken/overflow/
 missing) · `priority:medium` (spacing/type/shape) · `priority:low` (minor). Batch small related gaps for
 one route into a single issue — don't flood the tracker.
+
+## Verifying a multi-constraint fix (when re-checking a specific PR, not a broad route sweep)
+When the thing under review has **several criteria that must hold together** (e.g. clears the copy AND
+fills each corner the design fills AND reaches the edges AND no overflow), do **not** report a narrative
+"PASS at desktop". Build a **constraint × width matrix**: rows = every acceptance criterion, columns =
+every target width (and mobile), each cell a measured PASS/FAIL with the number behind it. The verdict is
+PASS **only if every cell passes** — one failing cell at one width is a BLOCKER, not a nit. Measure the
+*rendered output* (geometry, and **pixel-level ink** for decorative vectors — not the element bounding
+box, which over/under-states corner & edge coverage). If an earlier pass "fixed" the issue, re-confirm it
+didn't regress a sibling criterion or another width.
 
 ## Output
 1. A concise **gap report** in chat (per route × viewport; note what you ignored as a known departure).
