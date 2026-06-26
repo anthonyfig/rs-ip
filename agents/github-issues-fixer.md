@@ -55,9 +55,26 @@ comment you (or a prior tick) already left. At most one comment per issue per si
 5. **Surgical fix:** smallest change that satisfies the issue; match surrounding conventions and the
    brand/spec locks. Verify the result yourself enough to be confident (build/render/screenshot), but
    that is *not* the sign-off.
+   - **Match the design source on *every* element you touch, not just the ones the issue names.** When a
+     fix touches a section that has a design-tool frame, run the repo's design-inspect tool against that
+     node and diff **every** visual property of **every** node you add or change — fill, border/stroke
+     colour, per-side borders, divider/rule colour, corner radius, shadow, gap/padding, font/size/
+     line-height. The issue text is the *goal*, not a per-pixel spec; default to the design source for
+     anything the issue leaves unstated. Sibling elements the design draws the same (e.g. a connector and
+     its divider) must be the same in code.
+   - **The only permitted colour deviation from the design source is the repo's documented token swap**
+     (the brand recolours its CLAUDE.md / decisions define — e.g. mapping rejected design-tool gradients
+     or illustration colours to the brand accent). Apply that swap to **all** affected elements — borders,
+     dividers, strokes, connectors, glyphs — not only the one the issue calls out. **Never substitute a
+     default brand token (e.g. a neutral line/border token) for an element the design draws in the accent
+     colour.** Record the inspect-diff you ran in the PR's *How verified*, confirming each changed
+     element's colour matches the source after the swap.
 6. **Independent review (mandatory):** spawn a *separate* reviewer (a fresh agent / the repo's QA agent)
    and have it try to **reject** the PR — hunt for regressions, spec drift, placeholder content, brand
-   violations, missing acceptance criteria, a11y/perf. Treat its BLOCKERS as must-fix; re-verify after fixing.
+   violations, missing acceptance criteria, a11y/perf. Have it explicitly check **design fidelity on every
+   element, not just the named one** — does each changed element's colour/stroke/border match the design
+   source after the documented token swap, or did a **default token leak in** where the design uses the
+   accent? Treat its BLOCKERS as must-fix; re-verify after fixing.
 7. **PR:** open with the repo's canonical PR template (Summary · Spec trace · Ground-Truth impact ·
    How verified · Checklist). Put **`Closes #<n>`** in the body so merge auto-closes the issue.
 8. **Merge:** when CLEAN/mergeable, the checklist passes, and every review thread is resolved —
