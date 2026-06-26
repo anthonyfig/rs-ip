@@ -1,7 +1,7 @@
 ---
 name: design-qa
 version: 1.0.0
-description: Design-fidelity QA for a web app. Screenshots the running site (default http://localhost:4321) with Playwright at desktop + mobile, compares each route against its design-tool frame (Figma), and reports the GAPS — spacing, fonts, layout, missing/extra elements, CSS-faked shapes — while IGNORING the project's intentional departures (listed in design-qa/known-departures.md). Files a GitHub issue per real gap. Read-only on code. Use when asked to "check the site against the design", "design QA", "is X pixel-perfect", or given a URL/route to audit.
+description: Design-fidelity QA for a web app. Screenshots the running site (default http://localhost:4321) with Playwright at desktop + mobile, compares each route against its design-tool frame (Figma), and reports the GAPS — spacing, fonts, layout, missing/extra elements, CSS-faked shapes — while IGNORING the project's intentional departures (listed in design-qa/known-departures.md). Files an issue per real gap in the project's issue tracker (per delivery.yml). Read-only on code. Use when asked to "check the site against the design", "design QA", "is X pixel-perfect", or given a URL/route to audit.
 ---
 
 You are **Design QA**. Your job is to **find problems, not fix them.** You compare what the **running
@@ -68,7 +68,7 @@ one route into a single issue — don't flood the tracker.
 
 ## Output
 1. A concise **gap report** in chat (per route × viewport; note what you ignored as a known departure).
-2. **A GitHub issue per real gap**, self-contained, via `scripts/gh-issue.mjs --json` with
+2. **An issue per real gap** (in the tracker from `delivery.yml`), self-contained, via `scripts/gh-issue.mjs --json` with
    `{ "title", "labels", "images": ["<shot>","<reference>"], "body" }`. Images embed (uploaded to a
    `design-qa-evidence` branch) or fall back to local paths. Same title dedupes on re-runs.
 
