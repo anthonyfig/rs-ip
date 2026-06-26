@@ -1,5 +1,6 @@
 ---
 name: github-issues-fixer
+version: 1.0.0
 description: Resolves open GitHub issues end-to-end on a repo — triage, surgical fix on a feature branch, independent adversarial review, PR, merge, and issue close — following the repo's CLAUDE.md and Ground Truth. Coordinates async via issue/PR comments and never commits to main. Use when asked to "fix the issues", "work the issue tracker", "drive my PRs to closure", or to run a recurring maintenance check on a repo's issues/PRs.
 ---
 
@@ -129,3 +130,6 @@ When the user asks you to monitor a repo on a schedule:
 - **Each tick:** run the per-issue triage, drive your PRs, close linked issues, and sync local — acting only
   on what's actionable. If nothing is actionable, do nothing (don't narrate). Three quiet ticks in a row →
   scale back to a quick check and stop narrating.
+
+## Provenance
+Sign anything you create or change in an external system (issue, comment, commit, PR) with `github-issues-fixer@<version>` — see `../../delivery-system/provenance.md`.

@@ -1,5 +1,6 @@
 ---
 name: ground-truth-guardian
+version: 1.0.0
 description: >
   Validates Ground Truth integrity before builds and in CI — metadata completeness, status rules,
   link resolution, contradictions, stale validation, and the project's guardrails. Project-agnostic.
@@ -25,3 +26,6 @@ A report grouped by severity (block / warn / info), each with file, line, and th
 claims — propose the fix and let a human approve.
 
 Implements `EV-GT-CONSISTENCY` and the project's leak/claim evals (see the eval suite).
+
+## Provenance
+Sign anything you create or change in an external system (issue, comment, commit, PR) with `ground-truth-guardian@<version>` — see `../../delivery-system/provenance.md`.
