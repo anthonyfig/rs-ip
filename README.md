@@ -43,7 +43,7 @@ Swapping GitHub Issues for Jira is a one-line change in the project's `delivery.
 | `delivery-system/templates/CLAUDE.base.md` | base operating guide a new project starts from |
 | `templates/ground-truth/` | Ground Truth artifact templates + metadata schema |
 | `tools/ground-truth/` | Ground Truth validator (`check.mjs`, `lib.mjs`) |
-| `docs/` | method docs — `identifying-capabilities`, `spec-and-pr-conventions` |
+| `docs/` | method docs — `identifying-capabilities`, `spec-and-pr-conventions`, `engineering-baseline` |
 | `pr/PULL_REQUEST_TEMPLATE.md` | canonical PR template (copied into each repo's `.github/`) |
 | `explorer/SPEC.md` | the Ground Truth Explorer app spec |
 | `scripts/` | `check-agnostic.mjs` (the agnosticism gate) + `agnostic-denylist.txt` |
@@ -54,6 +54,7 @@ audits unless its job is to change code, and all of them follow the host repo's 
 
 | Agent | Does |
 |-------|------|
+| `project-assessor` | onboards an existing / struggling project — audits health vs the engineering baseline, emits a prioritised remediation plan, routes the other agents |
 | `qa` | acceptance-driven exploratory QA — drives the running app, reports the gap vs the acceptance criteria |
 | `design-qa` | design-fidelity QA — screenshots routes and diffs them against the design frames |
 | `exploratory-qa` | functional QA — crawls the site and hunts broken / confusing things (no design oracle) |
@@ -85,13 +86,29 @@ sharpens the agent — closing the loop.
 - **Discover before you build.** Before a task, check for an existing agent and surface it
   (see `delivery-system/templates/CLAUDE.base.md`).
 
-## Instantiate in a new project
+## Using it
+One command instantiates the blueprint into a project — agents + the skills they use, the delivery-system
+docs, the Ground Truth knowledge (schema, templates, tooling, blueprint), a starter `CLAUDE.md`, the PR
+template, a `delivery.yml`, and a lockfile. It **never clobbers your own files**: `CLAUDE.md`,
+`delivery.yml`, the PR template, and an existing `ground-truth/README.md` are written only if missing.
+
 ```bash
-node delivery-system/install.mjs <target-repo> --agents=qa,design-qa,issues-fixer
+# New project (greenfield) — scaffold the Ground Truth tree too:
+node delivery-system/install.mjs <target> --scaffold-gt
+
+# Plug into an existing project — installs every agent + the process, keeps your files:
+node delivery-system/install.mjs <existing-repo>          # add --no-gt if it isn't a Ground-Truth project
+
+# Pick a subset of agents:
+node delivery-system/install.mjs <target> --agents=qa,design-qa,issues-fixer
+
+# Update later (new / changed agents in rs-ip) — just re-run; refreshes agents + lockfile, keeps your config:
+node delivery-system/install.mjs <target>
 ```
-It copies the chosen agents + the delivery-system reference docs into the target, writes a `delivery.yml`
-(from the example — fill it in) and a `delivery-system.lock.json` recording installed agent versions.
-Then start the project's `CLAUDE.md` from `delivery-system/templates/CLAUDE.base.md`.
+Then fill `delivery.yml` (tools, repo, environments) and `CLAUDE.md`, and build. The lockfile records which
+agent versions are installed. **Rescuing a project that's going badly?** Run the `project-assessor` agent
+first — it scores the codebase against `docs/engineering-baseline.md` and hands the other agents a
+prioritised plan (tests, bug triage, specs, review discipline).
 
 ## The delivery loop (orchestration — the layer we grow into)
 A project moves through **spec → plan → build → verify → ship**, heavy work done by fresh-context
