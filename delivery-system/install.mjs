@@ -49,9 +49,11 @@ for (const rel of ['README.md', 'provenance.md', 'delivery.schema.md', 'delivery
 did.push('delivery-system docs');
 
 // 4) PR template + 5) method docs
-cp(S('pr/PULL_REQUEST_TEMPLATE.md'), T('.github/PULL_REQUEST_TEMPLATE.md')); did.push('PR template');
+const prt = T('.github/PULL_REQUEST_TEMPLATE.md');
+if (!fs.existsSync(prt)) { cp(S('pr/PULL_REQUEST_TEMPLATE.md'), prt); did.push('PR template'); } else did.push('PR template kept (existing)');
 cp(S('docs/identifying-capabilities.md'), T('docs/identifying-capabilities.md'));
-cp(S('docs/spec-and-pr-conventions.md'), T('docs/spec-and-pr-conventions.md')); did.push('method docs');
+cp(S('docs/spec-and-pr-conventions.md'), T('docs/spec-and-pr-conventions.md'));
+cp(S('docs/engineering-baseline.md'), T('docs/engineering-baseline.md')); did.push('method docs + engineering baseline');
 
 // 6) Ground Truth knowledge (schema, templates, tooling, blueprint) — unless --no-gt
 if (withGT) {

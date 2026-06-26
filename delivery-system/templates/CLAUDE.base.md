@@ -12,6 +12,12 @@ guidelines; when in doubt, those still apply.
 - The Delivery System is instantiated here via **`delivery.yml`** (tools, repo, environments) and the
   agents installed in `.claude/agents/`.
 
+## Adopting an existing or struggling project
+If this repo pre-existed the Delivery System, **start with the `project-assessor` agent**. It audits the
+project's health against `docs/engineering-baseline.md` and emits a prioritised, human-gated plan; the
+other agents then execute it (tests via `eval-runner`, bugs via `qa` / `issues-fixer`, missing specs via
+`capability-spec-writer`). Greenfield projects can skip this and go straight to building the Ground Truth.
+
 ## Discover before you build (agents)
 Before doing any non-trivial task, **check whether an agent already does something like it**:
 1. Scan `.claude/agents/` (installed) and the Delivery System blueprint for an agent whose job matches.
