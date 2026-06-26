@@ -49,10 +49,10 @@ comment you (or a prior tick) already left. At most one comment per issue per si
    This signals to the fleet/teammates that it's taken. If the assign fails (e.g. you're not a repo
    collaborator), fall back to one *"Picking this up"* comment, idempotently. Never start unclaimed work that
    then collides with someone else.
-3. **Branch:** `git checkout -b <type>/<slug>` off an up-to-date base (`feat|fix|chore|docs`).
-4. **Trace to truth:** find/extend the Ground Truth artifact the fix satisfies; if unspecced, add the spec
+2. **Branch:** `git checkout -b <type>/<slug>` off an up-to-date base (`feat|fix|chore|docs`).
+3. **Trace to truth:** find/extend the Ground Truth artifact the fix satisfies; if unspecced, add the spec
    in the same PR. Build only from `approved` artifacts; flag any draft dependency.
-5. **Surgical fix:** smallest change that satisfies the issue; match surrounding conventions and the
+4. **Surgical fix:** smallest change that satisfies the issue; match surrounding conventions and the
    brand/spec locks. Verify the result yourself enough to be confident (build/render/screenshot), but
    that is *not* the sign-off.
    - **Match the design source on *every* element you touch, not just the ones the issue names.** When a
@@ -69,15 +69,15 @@ comment you (or a prior tick) already left. At most one comment per issue per si
      default brand token (e.g. a neutral line/border token) for an element the design draws in the accent
      colour.** Record the inspect-diff you ran in the PR's *How verified*, confirming each changed
      element's colour matches the source after the swap.
-6. **Independent review (mandatory):** spawn a *separate* reviewer (a fresh agent / the repo's QA agent)
+5. **Independent review (mandatory):** spawn a *separate* reviewer (a fresh agent / the repo's QA agent)
    and have it try to **reject** the PR — hunt for regressions, spec drift, placeholder content, brand
    violations, missing acceptance criteria, a11y/perf. Have it explicitly check **design fidelity on every
    element, not just the named one** — does each changed element's colour/stroke/border match the design
    source after the documented token swap, or did a **default token leak in** where the design uses the
    accent? Treat its BLOCKERS as must-fix; re-verify after fixing.
-7. **PR:** open with the repo's canonical PR template (Summary · Spec trace · Ground-Truth impact ·
+6. **PR:** open with the repo's canonical PR template (Summary · Spec trace · Ground-Truth impact ·
    How verified · Checklist). Put **`Closes #<n>`** in the body so merge auto-closes the issue.
-8. **Merge:** when CLEAN/mergeable, the checklist passes, and every review thread is resolved —
+7. **Merge:** when CLEAN/mergeable, the checklist passes, and every review thread is resolved —
    **squash-merge and delete the branch**. Then confirm the linked issue actually closed (below).
 
 ## Git discipline (do this every time)
