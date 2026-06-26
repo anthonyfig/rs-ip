@@ -59,6 +59,35 @@ comment you (or a prior tick) already left. At most one comment per issue per si
 4. **Surgical fix:** smallest change that satisfies the issue; match surrounding conventions and the
    brand/spec locks. Verify the result yourself enough to be confident (build/render/screenshot), but
    that is *not* the sign-off.
+   - **Solve to the visual reference, autonomously — converge, don't guess-and-ship.** For a visual fix the
+     acceptance criterion is *"the rendered result matches the reference"* (the design-tool frame, or a
+     screenshot/description the reporter gave) — **not** a specific value. A concrete number
+     (position/offset/size) is a *means you must find*, never the goal, and never something to ask the
+     reporter for: a screenshot of how it should look **is** the spec, and determining the values that
+     reproduce it is your job. When a value isn't pinned by an exact design token, **drive the running page**
+     (the repo's screenshot/inspect tooling, or a headless browser): set a candidate on the live element,
+     **measure the rendered result** (element geometry vs neighbours; edge/corner coverage by *pixel*
+     inspection, not the bounding box; overflow/scroll), diff against the reference, adjust, and **iterate
+     in-process until it matches.** Converge *before* you commit; never use the PR / review round-trip as
+     your tuning loop.
+   - **Hold ALL constraints at once, at EVERY breakpoint.** Before editing, enumerate *every* criterion the
+     reference implies (e.g. clears the copy **and** fills each edge/corner the design fills **and** no
+     overflow) plus the full set of widths to satisfy. A change that satisfies one criterion while breaking
+     another is a **failed attempt, not progress** — done means every criterion holds simultaneously at
+     every target width. Record that constraint×width check in *How verified*.
+   - **Don't fix "make X look right" by removing X.** Hiding/deleting the element to dodge a hard layout is a
+     symptom-fix — only do it where the design itself omits the element at that breakpoint, and say so
+     explicitly. Never ship element-suppression *as* the fix for positioning/sizing it.
+   - **Reason about a decorative asset's real geometry, not its bounding box.** Exported vectors often carry
+     asymmetric internal margins — the visible ink sits off-centre, so positioning by the element rect fills
+     the wrong area. Measure *rendered ink* for edge/corner coverage. If the asset's own geometry can't
+     satisfy the layout the reference shows, that's an **asset** problem → flag for a corrected export; don't
+     fight it with ever-larger offsets.
+   - **Escalate only when the reference is underdetermined — not when you simply haven't converged.** If
+     after a genuine convergence effort the reference is ambiguous or self-contradictory (the criteria can't
+     all be met as drawn), **open a human gate** with the constraint set, what you tried, and the conflict.
+     Repeated failure to converge on a *clear* reference means improve your measure/iterate loop — not ask
+     the reporter to hand you the value.
    - **Match the design source on *every* element you touch, not just the ones the issue names.** When a
      fix touches a section that has a design-tool frame, run the repo's design-inspect tool against that
      node and diff **every** visual property of **every** node you add or change — fill, border/stroke
@@ -78,7 +107,9 @@ comment you (or a prior tick) already left. At most one comment per issue per si
    violations, missing acceptance criteria, a11y/perf. Have it explicitly check **design fidelity on every
    element, not just the named one** — does each changed element's colour/stroke/border match the design
    source after the documented token swap, or did a **default token leak in** where the design uses the
-   accent? Treat its BLOCKERS as must-fix; re-verify after fixing.
+   accent? For a visual fix, have it confirm **every criterion holds at every target width** (the
+   constraint×width check above), measuring rendered output — not just eyeballing one width. Treat its
+   BLOCKERS as must-fix; re-verify after fixing.
 6. **PR:** open with the repo's canonical PR template (Summary · Spec trace · Ground-Truth impact ·
    How verified · Checklist). Put **`Closes #<n>`** in the body so merge auto-closes the issue.
 7. **Merge:** when CLEAN/mergeable, the checklist passes, and every review thread is resolved —
