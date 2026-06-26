@@ -105,12 +105,6 @@ spec-driven systems such as GSD — kept **human-gated + Ground-Truth-backed + p
 Templates, tooling, and the Explorer app start life inside a project and **graduate to rs-ip once proven
 reusable — generalized (project specifics removed) on the way in.**
 
-## Keeping the brain private (noted; not yet designed)
-rs-ip can live in a **private** repo. Because projects **install by copy**, a project only ever receives
-the specific agents it installs plus minimal reference docs — not rs-ip's full institutional knowledge.
-A deeper "least-knowledge install / private brain" design is intentionally **deferred**; this note just
-records that the current model already leans that way.
-
 ## Stay agnostic (enforced)
 `npm run check:agnostic` fails if a project repo name, a `gt-NN…` / `BR-N` / `OQ-N` id, a decision number,
 or a denylisted client/product term leaks in. Run it before promoting anything here, and extend
